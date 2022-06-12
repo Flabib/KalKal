@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">KalKal</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="send">Kirim</string>
+    <string name="duration">Durasi Olahraga (menit)</string>
+    <string name="height">Tinggi Badan (cm)</string>
+    <string name="temperature">Suhu Tubuh (celcius)</string>
+    <string name="weight">Berat Badan (kg)</string>
+    <string name="rate">Detak Jantung (bpm)</string>
+    <string name="age">Umur (tahun)</string>
+</resources>
