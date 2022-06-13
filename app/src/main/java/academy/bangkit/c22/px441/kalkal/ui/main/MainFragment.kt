@@ -1,26 +1,30 @@
-package academy.bangkit.c22.px441.kalkal
+package academy.bangkit.c22.px441.kalkal.ui.main
 
+import academy.bangkit.c22.px441.kalkal.NetworkConfig
+import academy.bangkit.c22.px441.kalkal.dataStore
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import academy.bangkit.c22.px441.kalkal.databinding.FragmentMainBinding
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import academy.bangkit.c22.px441.kalkal.remote.predict.PredictRequest
+import academy.bangkit.c22.px441.kalkal.twoPreciseAbs
+import academy.bangkit.c22.px441.kalkal.utils.DATA_STORE_USERNAME
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.message
 import com.skydoves.sandwich.request
-import retrofit2.Call
-import retrofit2.Callback
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
-
     private val binding get() = _binding!!
+
+    private lateinit var username: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,11 +36,23 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        lifecycleScope.launch {
+            val preferences = binding.root.context.dataStore.data.first()
+            try {
+                username = preferences[DATA_STORE_USERNAME] ?: ""
+            } catch (e: Exception) {
+                username = ""
+            }
+        }
+
         super.onViewCreated(view, savedInstanceState)
 
+        binding.textView.text = "Selamat datang, ${username}!"
+
         binding.buttonSubmit.setOnClickListener {
-            NetworkConfig().getService()
-                .getPrediction(Request.createFromInput(
+            NetworkConfig().getPredictService()
+                .getPrediction(
+                    PredictRequest.createFromInput(
                     binding.txtAge,
                     binding.txtRate,
                     binding.txtWeight,
@@ -57,8 +73,6 @@ class MainFragment : Fragment() {
                         }
                     }
                 }
-
-
         }
     }
 

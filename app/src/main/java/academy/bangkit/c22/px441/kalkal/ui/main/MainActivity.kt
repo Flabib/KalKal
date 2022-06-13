@@ -1,7 +1,8 @@
-package academy.bangkit.c22.px441.kalkal
+package academy.bangkit.c22.px441.kalkal.ui.main
 
+import academy.bangkit.c22.px441.kalkal.R
+import academy.bangkit.c22.px441.kalkal.dataStore
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
@@ -11,6 +12,15 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import academy.bangkit.c22.px441.kalkal.databinding.ActivityMainBinding
+import academy.bangkit.c22.px441.kalkal.ui.login.LoginActivity
+import academy.bangkit.c22.px441.kalkal.utils.DATA_STORE_USERNAME
+import android.content.Intent
+import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,7 +48,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_logout -> {
+                lifecycleScope.launch {
+                    this@MainActivity.dataStore.edit { settings ->
+                        settings[DATA_STORE_USERNAME] = ""
+                    }
+                }
+
+                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                finishAffinity()
+
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

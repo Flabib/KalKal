@@ -7,6 +7,6 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="academy.bangkit.c22.px441.kalkal.MainFragment"
+        android:name="academy.bangkit.c22.px441.kalkal.ui.main.MainFragment"
         tools:layout="@layout/fragment_main"/>
 </navigation>

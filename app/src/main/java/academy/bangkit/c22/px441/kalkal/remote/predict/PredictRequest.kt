@@ -1,9 +1,10 @@
-package academy.bangkit.c22.px441.kalkal
+package academy.bangkit.c22.px441.kalkal.remote.predict
 
+import academy.bangkit.c22.px441.kalkal.toInt
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.annotations.SerializedName
 
-data class Request(
+data class PredictRequest(
 
 	@field:SerializedName("duration")
 	val duration: Int? = null,
@@ -31,7 +32,7 @@ data class Request(
 			txtTemperature: TextInputEditText,
 			txtHeight: TextInputEditText,
 			txtDuration: TextInputEditText
-		) : Request = Request(
+		) : PredictRequest = PredictRequest(
 			txtAge.toInt(),
 			txtRate.toInt(),
 			txtWeight.toInt(),
